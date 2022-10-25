@@ -1,0 +1,85 @@
+// === MEDIA QUERIES ===
+@mixin mobile-screens() {
+  @media only screen and (max-width: 570px) {
+    @content;
+  }
+}
+
+@mixin tablet-screens() {
+  @media only screen and (max-width: 1020px) {
+    @content;
+  }
+}
+
+@mixin desktop-screens() {
+  @media only screen and (max-width: 1440px) {
+    @content;
+  }
+}
+
+@mixin desktop-large-screens() {
+  @media only screen and (max-width: 1920px) {
+    @content;
+  }
+}
+
+// === GENERAL ===
+@mixin max-content-width($content-width: 1172px) {
+  margin: 0 auto;
+  max-width: $content-width;
+}
+
+@mixin flex-center() {
+  display: flex;
+  align-items: center;
+}
+
+@mixin open-account-button() {
+  @include flex-center;
+  background-color: $secondary-text-color;
+  color: $primary-text-color;
+  font-size: 13px;
+  text-align: center;
+  border: none !important;
+  border-radius: 4px;
+  height: 50px;
+  max-width: 155px;
+  margin: 0 10px;
+  padding: 0 15px;
+}
+
+@mixin primary-button() {
+  background-color: $secondary-text-color;
+  color: $primary-text-color;
+  text-align: center;
+  @include mobile-screens {
+    width: 100%;
+  }
+}
+
+@mixin secondary-button() {
+  background-color: transparent;
+  color: $secondary-text-color;
+  text-align: center;
+  @include mobile-screens {
+    width: 100%;
+  }
+}
+
+@mixin menu-links() {
+  font-weight: $bold-font-weight;
+  text-decoration: none;
+  color: $primary-text-color;
+  text-transform: capitalize;
+}
+
+@mixin container-section() {
+ @include max-content-width();
+    // overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    padding: 85px 30px;
+    @include mobile-screens {
+      padding: 45px 30px;
+    }
+}

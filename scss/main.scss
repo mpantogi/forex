@@ -1,0 +1,567 @@
+@import "/css/fonts.css";
+@import "partials/variables";
+@import "partials/mixins";
+
+.flickity-prev-next-button.previous {
+  display: none;
+}
+.flickity-prev-next-button.next {
+  display: none;
+}
+
+// === GLOBAL ===
+
+html,
+body {
+  height: 100vh;
+  width: 100%;
+}
+
+html {
+  scroll-behavior: smooth;
+  font-size: 100%;
+  box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+}
+
+*,
+::before,
+::after {
+  box-sizing: inherit;
+  padding: 0;
+  margin: 0;
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+  background: #fafafa;
+  font-family: "Gilroy", sans-serif;
+  background: $primary-background-color;
+}
+
+h1,
+h2,
+h3 {
+  font-weight: $bold-font-weight;
+}
+
+h1 {
+  font-size: 65px;
+  line-height: 78px;
+  @include tablet-screens {
+    font-size: 55px;
+    line-height: 69px;
+  }
+  @include mobile-screens {
+    font-size: 38px;
+    line-height: 46px;
+  }
+}
+
+h2 {
+  font-size: 40px;
+  line-height: 50px;
+}
+
+h3{
+  font-size: 25px;
+  line-height: 35px;
+}
+
+p {
+  font-weight: $normal-font-weight;
+  font-size: 20px;
+  line-height: 28px;
+  @include tablet-screens {
+    font-size: 18px;
+    line-height: 24px;
+  }
+}
+
+button {
+  min-height: 50px;
+  min-width: 222px;
+  border: 1px solid $secondary-text-color;
+  border-radius: 2px;
+  text-align: center;
+  @include mobile-screens {
+    min-height: 60px;
+    min-width: 315px;
+  }
+}
+
+// === HEADER ===
+
+.header {
+  @include flex-center;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  background: $secondary-background-color;
+  align-items: center;
+  min-height: 90px;
+  z-index: 100;
+  @include tablet-screens {
+    min-height: 70px;
+  }
+
+  &__container {
+    @include max-content-width();
+    @include flex-center;
+    width: 100%;
+    justify-content: space-between;
+    @include tablet-screens {
+      flex-direction: row-reverse;
+    }
+  }
+
+  &__logo {
+    margin: 0 30px;
+  }
+
+  &__navbar {
+    cursor: pointer;
+  }
+
+  &__main-nav {
+    @include flex-center;
+    list-style: none;
+    @include tablet-screens {
+      display: none;
+    }
+    li {
+      margin: 0 15px;
+      padding-bottom: 4px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      &:hover {
+        border-bottom: 2px solid $secondary-text-color;
+        ul {
+        z-index: 101;
+        position: absolute;
+        display: flex;
+        padding: 10px 0;
+        top: 65%;
+        width: 150px;
+        background: $secondary-background-color;
+        &:hover {
+          ul {
+            display: block;
+          }
+        }
+          ul {
+            display: none;
+          }
+          li {
+            width: 100%;
+            padding-bottom: 15px;
+            text-decoration: none;
+            margin: 0px;
+            &:hover {
+              border-bottom: none;
+              ul {
+                display: block;
+              }
+            }
+            a {
+              &:hover {
+              color: grey;
+              }
+            }
+          }
+        }
+      }
+      ul {
+        display: none;
+      }
+      a {
+        @include menu-links;
+      }
+
+    }
+    li:last-child {
+      margin-right: 15px;
+    }
+  }
+
+  &__open-account-btn {
+    @include open-account-button;
+  }
+
+  &__hamburger {
+    position: relative;
+    display: none;
+    cursor: pointer;
+    appearance: none;
+    background: none;
+    outline: none;
+    border: none;
+    min-width: 24px;
+
+    @include tablet-screens {
+      display: block;
+      margin: 0 30px;
+    }
+
+    &_active:before {
+      transform: rotate(-45deg) translate(-6px, 6px);
+    }
+    &_active:after {
+      transform: rotate(45deg) translate(-6px, -5px);
+    }
+    &_active {
+      .header__bar {
+        opacity: 0;
+      }
+    }
+  }
+
+  &__bar,
+  &__hamburger:after,
+  &__hamburger:before {
+    content: "";
+    display: block;
+    width: 100%;
+    height: 2px;
+    border-radius: 2px;
+    background-color: $primary-text-color;
+    margin: 6px 0;
+  }
+}
+
+.mobile-navbar {
+  position: fixed;
+  @include flex-center;
+  top: 0;
+  right: 0;
+  width: 100%;
+  min-height: 100%;
+  background-color: $secondary-background-color;
+  margin-top: 70px;
+  display: none;
+  z-index: 99;
+  &_active {
+    @include tablet-screens {
+      display: block;
+    }
+  }
+
+  &__main-nav {
+    @include flex-center;
+    width: 100%;
+    list-style: none;
+    flex-direction: column;
+    li {
+      padding: 15px;
+      a {
+        @include menu-links;
+      }
+    }
+  }
+
+  &__open-account-btn {
+    @include open-account-button;
+  }
+}
+
+// === COVER ===
+
+.cover {
+  @include flex-center;
+  background: $secondary-background-color;
+  width: 100%;
+  margin-top: 70px;
+
+  &__container {
+    @include max-content-width();
+    @include flex-center;
+    flex-direction: row;
+    padding: 30px;
+    overflow: hidden;
+    justify-content: space-between;
+    @include tablet-screens {
+      flex-direction: column-reverse;
+      padding: 0px 30px 30px 30px;
+    }
+  }
+  h1 {
+    color: $primary-text-color;
+    margin: 35px 0;
+    @include tablet-screens {
+      margin: 25px 0;
+    }
+  }
+  p {
+    color: $primary-text-color;
+  }
+  button {
+    margin: 25px 30px 16px 0px;
+  }
+  &__primary-button {
+    @include primary-button;
+  }
+  &__secondary-button {
+    @include secondary-button;
+  }
+  &__hint {
+    font-size: $small-font-size;
+  }
+  &__image {
+    @include mobile-screens {
+      width: 100vh;
+    }
+  }
+  a {
+    color: $primary-text-color;
+  }
+}
+
+// ===  SLIDER SECTION ===
+
+.slider {
+  background-color: $tertiary-background-color;
+  width: 100%;
+
+  &__container {
+    @include container-section;
+  }
+
+  &__cards {
+    margin-top: 35px;
+    margin-bottom: 45px;
+    @include tablet-screens {
+      margin-top: 17px;
+      margin-bottom: 60px;
+    }
+
+    &__item {
+      @include flex-center;
+      flex-direction: column;
+      width: 100%;
+      gap: 24px;
+      text-align: center;
+      min-width: 350px;
+      min-height: 270px;
+      padding: 20px;
+      background-color: $primary-background-color;
+      border: 1px solid #e5e5e5;
+      border-radius: 7px;
+      @include tablet-screens {
+        min-width: 315px;
+        min-height: 260px;
+      }
+      @media only screen and (max-width: 1200px) {
+        width: 49%;
+        margin-right: 12px;
+      }
+      @media only screen and (max-width: 710px) {
+        width: 100%;
+        margin-right: 12px;
+      }
+    }
+  }
+
+  /* enable Flickity by default */
+  &__cards:after {
+    content: "flickity";
+    display: none; /* hide :after */
+  }
+
+  @media screen and (min-width: 1200px) {
+    /* disable Flickity for large devices */
+    &__cards:after {
+      content: "";
+    }
+    &__cards {
+      display: flex;
+      flex-direction: row;
+      gap: 30px;
+    }
+  }
+
+  &__buttons {
+    display: flex;
+    justify-content: space-between;
+    padding: 30px 0px 15px 0px;
+    justify-content: flex-start;
+    gap: 30px;
+    @include mobile-screens {
+      flex-direction: column;
+    }
+
+    &__primary-button {
+      @include primary-button;
+    }
+    &__secondary-button {
+      @include secondary-button;
+    }
+  }
+  a {
+    color: $secondary-background-color;
+  }
+}
+
+// ===  SCREEN SECTION ===
+
+.screen {
+  width: 100%;
+
+  &__container {
+   @include container-section;
+   text-align: center;
+  }
+  p {
+    padding-top: 10px;
+  }
+  &__image-container {
+    position: relative;
+    top: 0;
+    left: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 25px;
+
+    &__placeholder{
+      flex-grow: 1;
+      position: relative;
+      display: flex;
+      justify-content: center;
+      top: 0;
+      left: 0;
+      max-width: 100%;
+      height: 50%;
+      @media only screen and (max-width: 1200px) {
+        display: none;
+      }
+    }
+
+    &__screen{
+      flex-grow: 1;
+      position: absolute;
+      display: none;
+      top: 60px;
+      margin-right: 15px;
+      max-width: 100%;
+      max-height: 100%;
+      @media only screen and (max-width: 1200px) {
+        margin-right: 0px;
+        position: relative;
+        margin-bottom: 45px;
+        &_active-1 {
+          display: block;
+        }
+      }
+      @include mobile-screens {
+        position: relative;
+        margin-right: 0px;
+        min-width: 375px;
+        max-height: 235px;
+        overflow: hidden;
+        
+      }
+    }
+  }
+
+  &__cards {
+    @include flex-center;
+    gap: 30px;
+    text-align: left;
+    @media only screen and (max-width: 1200px) {
+      text-align: center;
+      flex-direction: column;
+    }
+
+    &__item {
+      display: flex;
+      padding: 20px;
+      flex-direction: column;
+      box-sizing: border-box;
+      min-width: 350px;
+      min-height: 165px;
+      background-color: $primary-text-color;
+      border-radius: 5px;
+      box-shadow: 0px 0px 20px 8px rgba(0, 0, 0, 0.05);
+      &:hover {
+        background-color: $secondary-background-color;
+        color: $primary-text-color;
+        .screen__image-container__screen {
+          display: block;
+        }
+      }
+      @media only screen and (max-width: 1200px) {
+        background-color: transparent;
+        box-shadow: none;
+        &:hover {
+          background-color: transparent;
+          color: $secondary-background-color;
+        }
+      }
+      h3 {
+        color: $secondary-text-color;
+      }
+      p {
+        font-size: 18px;
+      }
+      }
+    }
+  }
+
+
+// ===  CTA SECTION ===
+
+.cta-section {
+  background-color: $secondary-background-color;
+  width: 100%;
+
+  &__container {
+    @include max-content-width();
+    display: flex;
+    gap: 30px;
+    justify-content: space-between;
+    padding: 60px 30px;
+    flex-direction: row;
+    @include tablet-screens {
+      flex-direction: column;
+    }
+  }
+
+  &__actions {
+    display: flex;
+    flex-direction: column;
+
+    &__buttons {
+      display: flex;
+      justify-content: space-between;
+      @include tablet-screens {
+        padding: 30px 0px;
+        justify-content: flex-start;
+        gap: 30px;
+      }
+      @include mobile-screens {
+        flex-direction: column;
+      }
+    }
+  }
+
+  h2 {
+    color: $primary-text-color;
+  }
+  p {
+    color: $primary-text-color;
+    font-size: $small-font-size;
+    padding-top: 15px;
+  }
+  &__primary-button {
+    @include primary-button;
+  }
+  &__secondary-button {
+    @include secondary-button;
+  }
+  a {
+    color: $primary-text-color;
+  }
+}
